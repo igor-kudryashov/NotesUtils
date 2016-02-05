@@ -25,12 +25,13 @@ import lotus.domino.Item;
 import lotus.domino.NotesException;
 
 /**
- * NotesUtils class provides highly reusable static utility methods with adding
- * value to the lotus.domino classes.
+ * NotesDocument class provides highly reusable static utility methods with adding value to the lotus.domino Document.
  *
  * @author Igor Kudryashov
  */
 public class NotesDocument {
+
+    private NotesDocument(){}
 
     /**
      * For a date-time item, returns a java.util.Date object representing the
@@ -95,7 +96,7 @@ public class NotesDocument {
      */
 
     public static boolean updateItemValue(Document document, String item, Object value) throws NotesException {
-        boolean ret = false;
+        boolean ret;
         if (document.hasItem(item)) {
             Item it = document.getFirstItem(item);
             ret = updateItemValue(it, value);
@@ -112,7 +113,6 @@ public class NotesDocument {
      * the document Lotus Notes, but only if the new value is different from
      * existing
      *
-     * @param document - the Notes document.
      * @param item     - the lotus.Domino.Item object.
      * @param value    - the new value of Notes item.
      * @return <code>true</code> if the value has been updated,

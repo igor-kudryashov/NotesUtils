@@ -1,1 +1,7 @@
 /target/
+/pom.xml
+/notes.iml
+/.project
+/.classpath
+/.settings
+/.idea
