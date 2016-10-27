@@ -27,7 +27,7 @@ import org.apache.commons.lang3.StringUtils;
 import lotus.domino.NotesException;
 import lotus.domino.Session;
 
-public class DominoTempFile {
+public class NotesTempFile {
 
     private String tempFolder;
     private Session session;
@@ -52,7 +52,7 @@ public class DominoTempFile {
      */
     private final String NOTES_TMP_FILENAME = "~notetmp.reg";
 
-    public DominoTempFile(Session session) {
+    public NotesTempFile(Session session) {
         this.session = session;
         tempFolder = getTempFolder();
     }
@@ -88,7 +88,7 @@ public class DominoTempFile {
         String tempDir = null;
         try {
             String temp = session.getEnvironmentString("notes_tempdir", true);
-            if (StringUtils.isNotBlank(tempFolder)) {
+            if (StringUtils.isNotBlank(temp)) {
                 tempDir = getTemDirFromTempDir(temp);
             }
         } catch (NotesException e) {
@@ -127,7 +127,7 @@ public class DominoTempFile {
      */
     private String getTempDirFromSystem() {
         String tempDir = System.getProperty("java.io.tmpdir");
-        if (StringUtils.isNotBlank(tempFolder)) {
+        if (StringUtils.isNotBlank(tempDir)) {
             tempDir = getTemDirFromTempDir(tempDir);
         }
         return tempDir;
@@ -156,8 +156,7 @@ public class DominoTempFile {
                 String regFilename = tempDir + File.separator + directories[i] + File.separator + NOTES_REG_FILENAME;
                 File regFile = new File(regFilename);
                 if (regFile.exists()) {
-                    temp = regFile.getParent();
-                    break;
+                    return regFile.getParent();                    
                 }
             }
         }

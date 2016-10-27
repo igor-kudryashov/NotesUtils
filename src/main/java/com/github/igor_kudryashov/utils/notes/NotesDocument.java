@@ -19,26 +19,32 @@ package com.github.igor_kudryashov.utils.notes;
 
 import java.util.Vector;
 
+import org.apache.commons.lang3.mutable.MutableDouble;
+
 import lotus.domino.DateTime;
 import lotus.domino.Document;
 import lotus.domino.Item;
 import lotus.domino.NotesException;
 
 /**
- * NotesDocument class provides highly reusable static utility methods with adding value to the lotus.domino Document.
+ * NotesDocument class provides highly reusable static utility methods with adding value to the
+ * lotus.domino Document.
  *
  * @author Igor Kudryashov
  */
 public class NotesDocument {
 
-    private NotesDocument(){}
+    private NotesDocument() {
+    }
 
     /**
-     * For a date-time item, returns a java.util.Date object representing the
-     * value of the item. For items of other types, returns null.
+     * For a date-time item, returns a java.util.Date object representing the value of the item. For
+     * items of other types, returns null.
      *
-     * @param document - the Lotus Notes document.
-     * @param item     - the item of Lotus Notes document.
+     * @param document
+     *            - the Lotus Notes document.
+     * @param item
+     *            - the item of Lotus Notes document.
      * @return java.util.Date value of the item.
      * @throws NotesException
      */
@@ -55,10 +61,11 @@ public class NotesDocument {
     }
 
     /**
-     * For a date-time item, returns a java.util.Date object representing the
-     * value of the item. For items of other types, returns null.
+     * For a date-time item, returns a java.util.Date object representing the value of the item. For
+     * items of other types, returns null.
      *
-     * @param item - the item of Lotus Notes document.
+     * @param item
+     *            - the item of Lotus Notes document.
      * @return java.util.Date value of the item.
      * @throws NotesException
      */
@@ -83,15 +90,16 @@ public class NotesDocument {
     }
 
     /**
-     * As lotus.domino.Document.replaceItemValue() method modifies the value of
-     * the document Lotus Notes, but only if the new value is different from
-     * existing
+     * As lotus.domino.Document.replaceItemValue() method modifies the value of the document Lotus
+     * Notes, but only if the new value is different from existing
      *
-     * @param document - the Notes document.
-     * @param item     - the name of Notes item.
-     * @param value    - the new value of Notes item.
-     * @return <code>true</code> if the value has been updated,
-     * <code>false</code> otherwise.
+     * @param document
+     *            - the Notes document.
+     * @param item
+     *            - the name of Notes item.
+     * @param value
+     *            - the new value of Notes item.
+     * @return <code>true</code> if the value has been updated, <code>false</code> otherwise.
      * @throws NotesException
      */
 
@@ -109,14 +117,14 @@ public class NotesDocument {
     }
 
     /**
-     * As lotus.domino.Document.replaceItemValue() method modifies the value of
-     * the document Lotus Notes, but only if the new value is different from
-     * existing
+     * As lotus.domino.Document.replaceItemValue() method modifies the value of the document Lotus
+     * Notes, but only if the new value is different from existing
      *
-     * @param item     - the lotus.Domino.Item object.
-     * @param value    - the new value of Notes item.
-     * @return <code>true</code> if the value has been updated,
-     * <code>false</code> otherwise.
+     * @param item
+     *            - the lotus.Domino.Item object.
+     * @param value
+     *            - the new value of Notes item.
+     * @return <code>true</code> if the value has been updated, <code>false</code> otherwise.
      * @throws NotesException
      */
     @SuppressWarnings("unchecked")
@@ -130,8 +138,22 @@ public class NotesDocument {
             }
         } else {
             if (vec.size() == 1) {
-                if (vec.firstElement().equals(value)) {
-                    return false;
+                if (vec.firstElement() instanceof Number) {
+                    // because lotus.docmino.Item.getValues() alvays return java.util.Vector with
+                    // Double elements for Numeric items,
+                    // value parameter must be converted to Double
+                    MutableDouble md = new MutableDouble((Number) value);
+                    if (Double.compare((Double) vec.firstElement(), md.getValue()) == 0) {
+                        return false;
+                    }
+                } else if (vec.firstElement() instanceof String) {
+                    if (vec.firstElement().equals((String) value)) {
+                        return false;
+                    }
+                } else {
+                    if (vec.firstElement().equals(value)) {
+                        return false;
+                    }
                 }
             }
             vec = new Vector<Object>();
@@ -146,9 +168,9 @@ public class NotesDocument {
     /**
      * Returns a parent document of the specified document.
      *
-     * @param document - the specified document.
-     * @return the parent document or <code>null</code> if parent document not
-     * found.
+     * @param document
+     *            - the specified document.
+     * @return the parent document or <code>null</code> if parent document not found.
      * @throws NotesException
      */
     public static Document getParentDocument(final Document document) throws NotesException {
@@ -160,12 +182,12 @@ public class NotesDocument {
     }
 
     /**
-     * Indicates whether a document is new. A document is new if it has not been
-     * saved.
+     * Indicates whether a document is new. A document is new if it has not been saved.
      *
-     * @param document - the Lotus Notes document.
-     * @return <code>true</code> if the document was created, but has not been
-     * saved and <code>false</code> if the document has been saved
+     * @param document
+     *            - the Lotus Notes document.
+     * @return <code>true</code> if the document was created, but has not been saved and
+     *         <code>false</code> if the document has been saved
      * @throws NotesException
      */
 
