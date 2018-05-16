@@ -15,11 +15,11 @@
    limitations under the License.
 ==================================================================== */
 
-package com.github.igor_kudryashov.utils.notes;
+package com.github.igor_kudryashov.notesutils;
 
 import java.util.Vector;
 
-import org.apache.commons.lang3.mutable.MutableDouble;
+import org.apache.commons.lang.mutable.MutableDouble;
 
 import lotus.domino.DateTime;
 import lotus.domino.Document;
@@ -32,9 +32,12 @@ import lotus.domino.NotesException;
  *
  * @author Igor Kudryashov
  */
-public class NotesDocument {
+public class NotesDocumentUtils {
 
-    private NotesDocument() {
+    /**
+     * Private default constructor for prevent of create instance of class 
+     */
+	private NotesDocumentUtils() {
     }
 
     /**
@@ -143,7 +146,7 @@ public class NotesDocument {
                     // Double elements for Numeric items,
                     // value parameter must be converted to Double
                     MutableDouble md = new MutableDouble((Number) value);
-                    if (Double.compare((Double) vec.firstElement(), md.getValue()) == 0) {
+                    if (Double.compare((Double) vec.firstElement(), (Double) md.getValue()) == 0) {
                         return false;
                     }
                 } else if (vec.firstElement() instanceof String) {

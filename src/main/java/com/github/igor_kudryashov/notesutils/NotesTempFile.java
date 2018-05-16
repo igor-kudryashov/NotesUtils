@@ -1,4 +1,4 @@
-package com.github.igor_kudryashov.utils.notes;
+package com.github.igor_kudryashov.notesutils;
 
 /* ====================================================================
 Licensed to the Apache Software Foundation (ASF) under one or more
@@ -22,7 +22,7 @@ import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import lotus.domino.NotesException;
 import lotus.domino.Session;

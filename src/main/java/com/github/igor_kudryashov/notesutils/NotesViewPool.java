@@ -15,7 +15,7 @@
    limitations under the License.
 ==================================================================== */
 
-package com.github.igor_kudryashov.utils.notes;
+package com.github.igor_kudryashov.notesutils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,6 +36,7 @@ public class NotesViewPool {
 
 	private static volatile NotesViewPool instance;
 	private Map<String, View> views;
+	private static final String KEY_DELIMITER = "";
 
 	//singleton
 	public static NotesViewPool getInstance() {
@@ -75,9 +76,9 @@ public class NotesViewPool {
 	 */
 	public View getView(Database database, String viewName) throws NotesException {
 		View view = null;
-		final String delimiter = "";
+		
 		if (database.isOpen()) {
-			String key = database.getReplicaID() + delimiter + viewName;
+			String key = database.getReplicaID() + KEY_DELIMITER + viewName;
 			if (views.containsKey(key)) {
 				// if view already exist in storage then get it.
 				view = views.get(key);
